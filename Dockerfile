@@ -1,6 +1,6 @@
-# Credits to DidierHoarau, https://github.com/splitbrain/dokuwiki/issues/1896#issuecomment-341851743
-
 FROM php:7-apache
+
+COPY startup.sh /startup.sh
 
 # Download and extract latest stable dokuwiki
 RUN mkdir -p /opt/src/ \
@@ -9,5 +9,7 @@ RUN mkdir -p /opt/src/ \
  && tar zxvf source.tgz \
  && rm source.tgz \
  && cp -R dokuwiki-*/. /var/www/html \
- && rm -rf dokuwiki-* \
- && chown -R www-data:www-data /var/www/html
+ && chown -R www-data:www-data /var/www/html \
+ && chmod +x /startup.sh
+
+CMD ["/startup.sh"]
